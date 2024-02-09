@@ -1,19 +1,39 @@
-require('dotenv').config();
-const TelegramBot = require('node-telegram-bot-api');
-const commands = require('./commands');
+require("dotenv").config();
+const { Telegraf } = require("telegraf");
+const { Markup } = require("telegraf");
 
-const bot = new TelegramBot(process.env.TELEGRAM_API_TOKEN, {polling: true});
+const commands = require("./commands/comandos");
 
-bot.on('message', (msg) => {
-    const chatId = msg.chat.id;
+const bot = new Telegraf(process.env.TELEGRAM_API_TOKEN);
 
-    if (msg.text.toString().toLowerCase() === '/start') {
-        bot.sendMessage(chatId, "Hello, I'm your bot!");
-    }
+bot.start((ctx) => {
+  ctx.reply(
+    "Hi, I'm RivotX'bot, try /help to see the available commands!",
+    Markup.keyboard([["/help", "/weather"], ["/waifu"]])
+      .oneTime() //una vez que se usa la primera vez, desaparece
+      .resize() //para que se ajuste al tamaño del teclado
+  );
 });
 
-Object.keys(commands).forEach((command) => {
-    bot.onText(new RegExp(`/${command}`), (msg) => {
-        commands[command](bot, msg);
-    });
+bot.help((ctx) => {
+  commands.help(ctx, commands);
 });
+
+bot.command("looser", (ctx) => {
+  commands.looser(ctx);
+});
+
+bot.command("weather", (ctx) => {
+  commands.weather(ctx);
+});
+
+bot.command("waifu", (ctx) => {
+  commands.waifu(ctx);
+});
+
+bot.action(["maid", "oppai", "selfies", "uniform"], (ctx) => {
+  const selectedCategory = ctx.callbackQuery.data;
+  commands.fetchWaifu(selectedCategory, ctx);
+});
+
+bot.launch();

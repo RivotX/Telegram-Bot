@@ -24,11 +24,3 @@ The bot responds to the following commands:
 - `/help`: Provides information about how to use the bot.
 
 You can send these commands in your Telegram chat with the bot.
-
-## Contributing
-
-If you wish to contribute to this project, please feel free to fork the repository, make your changes and create a pull request. We appreciate any improvements or new features.
-
-## License
-
-This project is licensed under the MIT License.
