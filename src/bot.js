@@ -24,7 +24,11 @@ bot.command("looser", (ctx) => {
 });
 
 bot.command("weather", (ctx) => {
-  commands.weather(ctx);
+  ctx.reply("Select a place to get the weather🤖").then(() => {
+    bot.hears(/.*/, (ctx) => {
+      commands.weather(ctx, ctx.message.text);
+    });
+  });
 });
 
 bot.command("waifu", (ctx) => {

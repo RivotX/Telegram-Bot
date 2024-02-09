@@ -10,21 +10,19 @@ const looser = (ctx) => {
 const help = (ctx, commands) => {
   let commandsList = "Available commands:\n";
   Object.keys(commands).forEach((command) => {
-    if (command !=="fetchWaifu")
-    commandsList += `/${command}\n`; // Use template literals to include the command name
+    if (command !== "fetchWaifu") commandsList += `/${command}\n`; // Use template literals to include the command name
   });
   ctx.reply(commandsList);
 };
 
-const weather = (ctx) => {
-  // get the weather from free weather api
+const weather = (ctx, city) => {
   axios
     .get(
-      `https://api.openweathermap.org/data/2.5/weather?q=Quito&appid=${process.env.WEATHER_API_KEY}` //872b041dd6b205006a1f42fe11be6f85
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.WEATHER_API_KEY}` //872b041dd6b205006a1f42fe11be6f85
     )
     .then((response) => {
       const weather = response.data.weather[0].description;
-      ctx.reply(`The weather in Quito is ${weather}`);
+      ctx.reply(`The weather in ${city} is ${weather} 😛`);
     })
     .catch((error) => {
       console.log(error);
@@ -70,7 +68,9 @@ function fetchWaifu(category, ctx) {
     })
     .then((data) => {
       const imageUrl = data.images[0].url;
-      ctx.replyWithPhoto(imageUrl);
+      ctx.replyWithPhoto(imageUrl).catch((error) => {
+        ctx.reply("<3");
+      });
     })
     .catch((error) => {
       console.error("An error occurred:", error.message);
