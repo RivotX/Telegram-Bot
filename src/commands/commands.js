@@ -81,14 +81,15 @@ const weather = (ctx, city) => {
 
 // -------------YTmp3-----------------------
 
+
 const YTmp3 = async (ctx, Link) => {
   try {
     ctx.reply('⌛Converting video to mp3... ⌛');
     console.log('Getting video info');
     const videoUrl = Link;
     const videoInfo = await ytdl.getInfo(videoUrl);
-    const audioFormats = ytdl.filterFormats(videoInfo.formats, "audioonly");
-    const audioUrl = audioFormats[0].url;
+    const audioFormats = ytdl.filterFormats(videoInfo.formats, "audioonly"); //obtiene solo los formatos de audio
+    const audioUrl = audioFormats[0].url; //pilla el primero que obtenga
 
     console.log('Downloading audio file');
     const response = await axios({
@@ -97,13 +98,14 @@ const YTmp3 = async (ctx, Link) => {
       responseType: 'stream'
     });
 
-    const filePath = path.resolve(__dirname, 'audio.mp3');
-    const writer = fs.createWriteStream(filePath);
+    const filePath = path.resolve(__dirname, 'audio.mp3'); // Obtiene la ruta absoluta del archivo de audio MP3 que se va a crear, __dirname es una variable global que representa el directorio del script actual y path.resolve() se utiliza para obtener la ruta completa del archivo audio.mp3 en ese directorio.
 
-    response.data.pipe(writer);
+    const writer = fs.createWriteStream(filePath); // Crea un flujo de escritura hacia el archivo de audio MP3, estableciendo una conexión entre tu programa Node.js y el archivo en el disco duro. Este flujo de escritura actúa como un canal a través del cual puedes enviar datos para ser escritos en el archivo.
 
-    return new Promise((resolve, reject) => {
-      writer.on('finish', resolve);
+    response.data.pipe(writer); // Utiliza el método `pipe` para redirigir el flujo de datos de la respuesta HTTP al flujo de escritura hacia el archivo. toma los datos del audio descargado (response.data) y los envía al flujo de escritura (writer), que a su vez los escribe en el archivo audio.mp3.
+
+    return new Promise((resolve, reject) => { // Crea una nueva promesa para manejar la finalización o el error de la escritura del archivo
+      writer.on('finish', resolve); // Cuando la escritura del archivo esté completa, resuelve la promesa
       writer.on('error', reject);
     }).then(() => {
       console.log('Sending audio file');
