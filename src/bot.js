@@ -1,8 +1,8 @@
 require("dotenv").config();
 const { Telegraf } = require("telegraf");
 const { Markup } = require("telegraf");
+const commands = require("./commands/commands");
 
-const commands = require("./commands/comandos");
 
 const bot = new Telegraf(process.env.TELEGRAM_API_TOKEN);
 
@@ -40,4 +40,16 @@ bot.action(["maid", "oppai", "selfies", "uniform"], (ctx) => {
   commands.fetchWaifu(selectedCategory, ctx);
 });
 
-bot.launch();
+
+bot.command("YTmp3", (ctx) => {
+  ctx.reply("Send the YouTube link to convert the video to MP3 (absolute url").then(() => {
+    bot.hears(/.*/, (ctx) => {
+      commands.YTmp3(ctx, ctx.message.text);
+    });
+  });
+});
+
+
+
+bot.launch()
+console.log("Bot is running")

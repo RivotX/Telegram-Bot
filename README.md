@@ -2,16 +2,6 @@
 
 This project is a simple Telegram bot built using the Telegram API.
 
-## Setup
-
-1. Clone the repository to your local machine.
-2. Run `npm install` to install the necessary dependencies.
-3. Create a `.env` file in the root directory and add your Telegram bot token like so:
-   ```
-   TELEGRAM_BOT_TOKEN=your_bot_token_here
-   ```
-   Replace `your_bot_token_here` with your actual bot token.
-
 ## Running the Bot
 
 To run the bot, use the command `npm start` in your terminal. This will start the bot, and it will begin listening for commands.
