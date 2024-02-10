@@ -42,7 +42,7 @@ bot.action(["maid", "oppai", "selfies", "uniform"], (ctx) => {
 
 
 bot.command("YTmp3", (ctx) => {
-  ctx.reply("Send the YouTube link to convert the video to MP3 (absolute url").then(() => {
+  ctx.reply("Send the YouTube link to convert the video to MP3 \nit must be an absolute url").then(() => {
     bot.hears(/.*/, (ctx) => {
       commands.YTmp3(ctx, ctx.message.text);
     });
