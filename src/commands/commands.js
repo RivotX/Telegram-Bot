@@ -200,7 +200,7 @@ const proChat = (ctx, input) => {
   console.log('USER: ', input);
   //console.log input for me to write an answer
   rl.question('RESPUESTA: ', (answer) => {
-    ctx.reply(`😈: ${answer}`);
+    ctx.reply(`😈Pro activado😈 (/exit para salir):\n\n${answer}`);
 
   });
   //if the user writes /exit, the prochat mode will be disabled
