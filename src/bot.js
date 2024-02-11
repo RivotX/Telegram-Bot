@@ -2,9 +2,7 @@ require("dotenv").config();
 const { Telegraf } = require("telegraf");
 const { Markup } = require("telegraf");
 const commands = require("./commands/commands");
-
 const LocalSession = require('telegraf-session-local');
-
 const localSession = new LocalSession({ database: 'session_db.json' });
 
 const bot = new Telegraf(process.env.TELEGRAM_API_TOKEN);
