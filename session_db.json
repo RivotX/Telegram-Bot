@@ -14,6 +14,13 @@
         "awaitingWeather": false,
         "awaitingYTmp3": false
       }
+    },
+    {
+      "id": "6355233624:6355233624",
+      "data": {
+        "prochat": true,
+        "awaitingWeather": false
+      }
     }
   ]
 }
