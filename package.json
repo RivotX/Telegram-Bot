@@ -15,6 +15,7 @@
     "fluent-ffmpeg": "^2.1.2",
     "fs": "^0.0.1-security",
     "node-telegram-bot-api": "^0.50.0",
+    "openai": "^4.27.0",
     "telegraf": "^4.15.3",
     "yt-get": "^1.1.2",
     "ytdl-core": "^4.11.5"

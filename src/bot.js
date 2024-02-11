@@ -8,7 +8,7 @@ const bot = new Telegraf(process.env.TELEGRAM_API_TOKEN);
 
 bot.start((ctx) => {
   ctx.reply(
-    "Hi, I'm RivotX'bot, try /help to see the available commands!",
+    "💗Hi, I'm RivotX'bot, im here to assist you!. You can chat with me or try /help to see the aviable commands 💗",
     Markup.keyboard([["/help", "/weather"], ["/waifu"]])
       .oneTime() //una vez que se usa la primera vez, desaparece
       .resize() //para que se ajuste al tamaño del teclado
@@ -49,7 +49,7 @@ bot.command("YTmp3", (ctx) => {
   });
 });
 
-
+bot.on('message', commands.chatWithOpenAI);
 
 bot.launch()
 console.log("Bot is running")
