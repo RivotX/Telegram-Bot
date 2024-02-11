@@ -5,6 +5,7 @@ const ytdl = require("ytdl-core");
 const fs = require('fs');
 const path = require('path');
 const OpenAI = require('openai');
+const { Input } = require("telegraf");
 
 
 
@@ -184,8 +185,30 @@ const chatWithOpenAI = async (ctx) => {
 
 
 
+const readline = require('readline');
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
 
 
+
+// comando para hablar yo con el usuario (trolling)
+const proChat = (ctx, input) => {
+
+  console.log('USER: ', input);
+  //console.log input for me to write an answer
+  rl.question('RESPUESTA: ', (answer) => {
+    ctx.reply(answer);
+
+  });
+  //if the user writes /exit, the prochat mode will be disabled
+  if (input === '/exit') {
+    rl.close();
+  }
+
+}
 
 
 module.exports = {
@@ -194,5 +217,6 @@ module.exports = {
   waifu,
   fetchWaifu,
   YTmp3,
-  chatWithOpenAI
+  chatWithOpenAI,
+  proChat
 };
