@@ -11,7 +11,7 @@ bot.use(localSession.middleware());
 
 bot.start((ctx) => {
   ctx.reply(
-    "💗Hi, I'm RivotX'bot, im here to assist you!. You can chat with me or try /help to see the aviable commands 💗",
+    "💗Hi, I'm RivotX'bot, im here to assist you!.\nYou can chat with me\nOr try /help to see the aviable commands 💗",
     Markup.keyboard([["/help", "/weather"], ["/waifu", "/YTmp3"]])
       .oneTime() //una vez que se usa la primera vez, desaparece
       .resize() //para que se ajuste al tamaño del teclado
@@ -44,7 +44,7 @@ bot.action(["maid", "oppai", "selfies", "uniform"], (ctx) => {
 
 
 bot.command("YTmp3", (ctx) => {
-  ctx.reply("Send the YouTube link to convert the video to MP3 \nit must be an absolute url");
+  ctx.reply("Send the YouTube link to convert the video to MP3 \nit must be an ABSOLUTE url (https://www.)");
   ctx.session.awaitingYTmp3 = true;
 });
 

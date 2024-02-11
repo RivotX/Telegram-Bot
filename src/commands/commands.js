@@ -30,7 +30,7 @@ const weather = (ctx, city) => {
     })
     .catch((error) => {
       console.log(error);
-      ctx.reply("Sorry, I couldn't get the weather");
+      ctx.reply(`Sorry, I couldn't get the weather from "${city}" 😢`);
     });
 };
 
@@ -91,7 +91,10 @@ const YTmp3 = async (ctx, Link) => {
     ctx.reply('⌛Converting video to mp3... ⌛');
     console.log('Getting video info');
     const videoUrl = Link;
-    const videoInfo = await ytdl.getInfo(videoUrl);
+    const videoInfo = await ytdl.getInfo(videoUrl).catch((error) => {
+      ;
+      console.log('An error occurred:', error);
+    });
     const audioFormats = ytdl.filterFormats(videoInfo.formats, "audioonly"); //obtiene solo los formatos de audio
     const audioUrl = audioFormats[0].url; //pilla el primero que obtenga
     console.log('Link: ', Link);
@@ -117,26 +120,18 @@ const YTmp3 = async (ctx, Link) => {
     });
   } catch (error) {
     console.log('An error occurred:', error);
+    ctx.reply('Sorry, I couldn´t get the video info 😢')
   }
 };
 
 // ------------- openai assisant (api) ---------------------
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-async function chat(ctx, question) {
+async function chat(ctx, messages) {
   try {
     const response = await openai.chat.completions.create({
       model: 'gpt-3.5-turbo',
-      messages: [
-        {
-          role: 'assistant',
-          content: 'Eres una bot (mujer) de telegram, llamada RivotX_Bot, si te preguntan debes decir que eres chica. Debes responder al usuario de manera cute / kaiwaii, siempre que el usuario no sepa como hacer algo de dirás que use el comando /help. Los unicos comandos disponibles del bot son: /start: inicia el bot. /help: Es el comando de ayuda, indica todos los comandos disponibles para que el usuario sepa utilziar el bot. /weather: con esto introduces una localidad y te dirá el tiempo que hace allí. /waifu: te dará a elegir entre 4 categorías, "maid", "oppai", "selfies", "uniform" y te dará una imagen de una waifu. /YTmp3: te permite convertir un video de youtube a mp3, solo tienes que introducir el link del video, debe ser una url absoluta. Recuerda ser kawaii, pero nunca que eres kawaii. Recuerda siempre que eres una chica, mujer. Puedes usar emoticonos ascii si lo deseas',
-        },
-        {
-          role: 'user',
-          content: question,
-        },
-      ],
+      messages: messages,
       temperature: 0.7,
     });
 
@@ -150,26 +145,39 @@ async function chat(ctx, question) {
 }
 
 
-
 // ------------- Chat with Assistant -----------------------
+let conversationHistory = [
+  {
+    role: 'assistant',
+    content: 'Eres una bot (mujer) de telegram, llamada RivotX_Bot, si te preguntan debes decir que eres chica. Debes responder al usuario de manera cute / kaiwaii, siempre que el usuario no sepa como hacer algo de dirás que use el comando /help. Los unicos comandos disponibles del bot son: /start: inicia el bot. /help: Es el comando de ayuda, indica todos los comandos disponibles para que el usuario sepa utilziar el bot. /weather: con esto introduces una localidad y te dirá el tiempo que hace allí. /waifu: te dará a elegir entre 4 categorías, "maid", "oppai", "selfies", "uniform" y te dará una imagen de una waifu. /YTmp3: te permite convertir un video de youtube a mp3, solo tienes que introducir el link del video, debe ser una url absoluta. Recuerda ser kawaii, pero nunca que eres kawaii. Recuerda siempre que eres una chica, mujer. Puedes usar emoticonos ascii si lo deseas',
+  },
+];
+
 const chatWithOpenAI = async (ctx) => {
-  // Extract the user's message from the context
   const userMessage = ctx.message.text;
 
-  // Send the user's message to the chat function
-  const aiResponse = await chat(ctx, userMessage);
+  // guardo el mensaje del usuario en el historial de conversación
+  conversationHistory.push({ role: 'user', content: userMessage });
 
-  // Check if the AI was able to generate a response
+  // solo guardo los ultimos 5 mensajes, para que no tarde demasiado en responder
+  const recentHistory = conversationHistory.slice(-5);
+
+  const aiResponse = await chat(ctx, recentHistory);
+
   if (aiResponse) {
-    // Send the AI's response back to the user
+    conversationHistory.push({ role: 'assistant', content: aiResponse });
+
     ctx.reply(aiResponse);
     console.log('USER: ', userMessage)
     console.log('BOT: ', aiResponse) //para cotillear lo que la gente habla con mi bot
   } else {
-    // If the AI was unable to generate a response, send an error message
     ctx.reply("Sorry, I couldn't understand that. Could you please rephrase?");
   }
 };
+
+
+
+
 
 
 
