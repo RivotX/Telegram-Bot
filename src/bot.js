@@ -12,7 +12,7 @@ bot.use(localSession.middleware());
 bot.start((ctx) => {
 
   ctx.reply(
-    "💗 Hi, I'm RivotX'bot. I'm here to assist you!\n\nYou can chat with me as you normally would, or try /help to see the available commands. 💗"),
+    "💗 Hi, I'm RivotX'bot. I'm here to assist you!💗\n\nYou can chat with me as you normally would, or try /help to see the available commands. "),
     Markup.keyboard([["/help", "/weather"], ["/waifu", "/YTmp3"]])
       .oneTime() //una vez que se usa la primera vez, desaparece
       .resize() //para que se ajuste al tamaño del teclado
