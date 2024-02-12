@@ -18,7 +18,7 @@
     {
       "id": "6355233624:6355233624",
       "data": {
-        "prochat": true,
+        "prochat": false,
         "awaitingWeather": false
       }
     }
