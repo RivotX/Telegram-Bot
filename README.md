@@ -5,7 +5,7 @@ This project is a simple Telegram bot built using the Telegram API.
 ## Running the Bot
 
 To run the bot, use the command `npm start` in your terminal. This will start the bot, and it will begin listening for commands.
-you will need to create a .env file and provide your Telegram, WeatherApi and OpenAI api keys
+You will need to create a .env file and provide your Telegram, WeatherApi, and OpenAI API keys, as well as install some dependencies.
 
 ## Using the Bot
 
@@ -19,5 +19,6 @@ The bot responds to the following commands:
 - `/YTmp3`: Converts a YouTube link into an MP3 file.
 - `/weather`: Provides the current weather for the location you specify.
 - `/ProChat`:  Allows you to directly chat with the user using the console.
+
 
 
