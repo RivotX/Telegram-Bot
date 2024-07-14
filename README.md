@@ -1,6 +1,6 @@
-# My Telegram Bot
+# Rivotx's Telegram Bot
 
-This project is a simple Telegram bot built using Telegram's API.
+Telegram bot built using Telegram's API.
 
 ## Running the Bot
 
