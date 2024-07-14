@@ -1,6 +1,6 @@
 # My Telegram Bot
 
-This project is a simple Telegram bot built using the Telegram API.
+This project is a simple Telegram bot built using Telegram's API.
 
 ## Running the Bot
 
